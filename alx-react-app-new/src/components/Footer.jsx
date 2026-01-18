@@ -1,11 +1,8 @@
-import React from 'react';
-
 function Footer() {
-  return (
-    <footer>
-      <p>@ 2023 City Lovers</p>
-    </footer>
-  );
+    return (
+        <footer style={{ backgroundColor: '#f4f4f4', color: '#333', textAlign: 'center', padding: '10px', marginTop: '20px' }}>
+            <p>© 2023 City Lovers</p>
+        </footer>
+    );
 }
-
 export default Footer;
