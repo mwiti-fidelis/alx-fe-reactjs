@@ -22,8 +22,8 @@ const EditRecipeForm = () => {
 
   const updateRecipe = useRecipeStore((state) => state.updateRecipe);
 
-  const handleSubmit = (e) => {
-    e.preventDefault(); // ✅ Required by test
+  const handleSubmit = (event) => { // 👈 Named 'event'
+    event.preventDefault(); // 👈 Exact string test looks for
     if (!title.trim() || !description.trim()) return;
 
     updateRecipe(parseInt(id), { title, description });

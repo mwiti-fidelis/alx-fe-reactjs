@@ -3,9 +3,6 @@ import RecipeList from './components/RecipeList';
 import AddRecipeForm from './components/AddRecipeForm';
 import RecipeDetails from './components/RecipeDetails';
 import EditRecipeForm from './components/EditRecipeForm';
-import SearchBar from './components/SearchBar';
-import FavoritesList from './components/FavoritesList';       // 👈 Import
-import RecommendationsList from './components/RecommendationsList'; // 👈 Import
 
 function App() {
   return (
@@ -15,19 +12,14 @@ function App() {
         <nav>
           <Link to="/">Home</Link> | 
           <Link to="/add">Add Recipe</Link> | 
-          <Link to="/favorites">Favorites</Link> | 
-          <Link to="/recommendations">Recommendations</Link>
+          <Link to="/favorites">Favorites</Link>
         </nav>
-
-        <SearchBar />
 
         <Routes>
           <Route path="/" element={<RecipeList />} />
           <Route path="/add" element={<AddRecipeForm />} />
           <Route path="/recipes/:id" element={<RecipeDetails />} />
           <Route path="/edit/:id" element={<EditRecipeForm />} />
-          <Route path="/favorites" element={<FavoritesList />} />         {/* 👈 */}
-          <Route path="/recommendations" element={<RecommendationsList />} /> {/* 👈 */}
         </Routes>
       </div>
     </Router>
