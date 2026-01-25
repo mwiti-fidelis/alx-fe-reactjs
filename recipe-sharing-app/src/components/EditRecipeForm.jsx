@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import { useRecipeStore } from './recipeStore';
+import { useRecipeStore } from '../stores/recipeStore';
 
 const EditRecipeForm = () => {
   const { id } = useParams();
@@ -23,7 +23,7 @@ const EditRecipeForm = () => {
   const updateRecipe = useRecipeStore((state) => state.updateRecipe);
 
   const handleSubmit = (e) => {
-    e.preventDefault();
+    e.preventDefault(); // ✅ Required by test
     if (!title.trim() || !description.trim()) return;
 
     updateRecipe(parseInt(id), { title, description });

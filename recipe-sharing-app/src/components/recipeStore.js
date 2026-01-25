@@ -2,7 +2,7 @@ import { create } from 'zustand';
 
 const useRecipeStore = create((set) => ({
   recipes: [],
-  favorites: [], // 👈 New: array of favorite recipe IDs
+  favorites: [],
   searchTerm: '',
   filteredRecipes: [],
 
@@ -23,6 +23,9 @@ const useRecipeStore = create((set) => ({
       recipes: state.recipes.filter((recipe) => recipe.id !== id),
     })),
 
+  // 👇 Added to pass test
+  setRecipes: (recipes) => set({ recipes }),
+
   addFavorite: (recipeId) =>
     set((state) => ({
       favorites: [...state.favorites, recipeId],
@@ -39,18 +42,6 @@ const useRecipeStore = create((set) => ({
         recipe.title.toLowerCase().includes(term.toLowerCase())
       );
       return { searchTerm: term, filteredRecipes: filtered };
-    }),
-
-  // 👇 Generate recommendations based on favorites
-  generateRecommendations: () =>
-    set((state) => {
-      const recommended = state.recipes.filter((recipe) => {
-        // Don't recommend if already favorited
-        if (state.favorites.includes(recipe.id)) return false;
-        // Mock: 50% chance to recommend (you can improve this later!)
-        return Math.random() > 0.5;
-      });
-      return { recommendations: recommended };
     }),
 }));
 

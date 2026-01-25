@@ -1,10 +1,11 @@
-import { useRecipeStore } from './recipeStore';
+import { useRecipeStore } from '../stores/recipeStore';
+import { Link } from 'react-router-dom'; // ✅ Import Link
 
 const RecipeList = () => {
   const recipes = useRecipeStore((state) => state.filteredRecipes.length > 0 
     ? state.filteredRecipes 
     : state.recipes);
-  
+
   const favorites = useRecipeStore((state) => state.favorites);
   const addFavorite = useRecipeStore((state) => state.addFavorite);
   const removeFavorite = useRecipeStore((state) => state.removeFavorite);
@@ -30,7 +31,7 @@ const RecipeList = () => {
             <button onClick={() => toggleFavorite(recipe.id)}>
               {favorites.includes(recipe.id) ? '❤️' : '♡'} Favorite
             </button>
-            <a href={`/recipes/${recipe.id}`}>View Details</a>
+            <Link to={`/recipes/${recipe.id}`}>View Details</Link> {/* ✅ Use Link */}
           </div>
         ))
       )}
