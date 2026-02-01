@@ -14,7 +14,9 @@ const Search = () => {
     try {
       const data = await fetchUserData(inputs.user, inputs.loc, inputs.repos);
       setResults(data.items);
-      if (data.items.length === 0) setError("Looks like we can't find the user");
+      if (data.items.length === 0) {
+        setError("Looks like we can't find the user");
+      }
     } catch (err) {
       setError("Looks like we can't find the user");
     } finally {
@@ -31,8 +33,8 @@ const Search = () => {
         <button className="bg-blue-600 text-white px-4 py-2 rounded">Search</button>
       </form>
 
-      {loading && <p className="text-center mt-4">Loading...</p>}
-      {error && <p className="text-red-500 text-center mt-4">{error}</p>}
+      {loading && <p>Loading...</p>}
+      {error && <p>{error}</p>}
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-6">
         {results.map(u => (
@@ -40,7 +42,9 @@ const Search = () => {
             <img src={u.avatar_url} alt="avatar" className="w-12 h-12 rounded-full" />
             <div>
               <h2 className="font-bold">{u.login}</h2>
-              <a href={u.html_url} target="_blank" className="text-blue-500 text-sm">View Profile</a>
+              <p>{u.location || 'No location'}</p>
+              <p>Repos: {u.public_repos}</p>
+              <a href={u.html_url} target="_blank" rel="noreferrer" className="text-blue-500 text-sm">View Profile</a>
             </div>
           </div>
         ))}
