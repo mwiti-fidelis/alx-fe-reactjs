@@ -1,5 +1,6 @@
-import React from 'react';
+
 import { useFormik } from 'formik';
+import * as Yup from 'yup';
 
 const RegistrationForm = () => {
   const formik = useFormik({
@@ -8,26 +9,13 @@ const RegistrationForm = () => {
       email: '',
       password: '',
     },
-    onSubmit: async (values) => {
-      try {
-        const response = await fetch('https://jsonplaceholder.typicode.com/users', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify(values),
-        });
-        if (!response.ok) throw new Error('Network response was not ok');
-        alert('Form submitted successfully!');
-      } catch (error) {
-        alert('Error submitting form. Please try again.');
-      }
-    },
-    validate: (values) => {
-      const errors = {};
-      if (!values.username) errors.username = 'Username is required';
-      if (!values.email) errors.email = 'Email is required';
-      else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(values.email)) errors.email = 'Invalid email';
-      if (!values.password) errors.password = 'Password is required';
-      return errors;
+    validationSchema: Yup.object({
+      username: Yup.string().required('Username is required'),
+      email: Yup.string().email('Invalid email').required('Email is required'),
+      password: Yup.string().required('Password is required'),
+    }),
+    onSubmit: (values) => {
+      console.log('Form submitted:', values);
     },
   });
 
@@ -35,18 +23,24 @@ const RegistrationForm = () => {
     <form onSubmit={formik.handleSubmit}>
       <div>
         <label>Username:</label>
-        <input type="text" name="username" onChange={formik.handleChange} onBlur={formik.handleBlur} value={formik.values.username} />
-        {formik.touched.username && formik.errors.username && <div style={{ color: 'red' }}>{formik.errors.username}</div>}
+        <input type="text" name="username" {...formik.getFieldProps('username')} />
+        {formik.touched.username && formik.errors.username ? (
+          <div>{formik.errors.username}</div>
+        ) : null}
       </div>
       <div>
         <label>Email:</label>
-        <input type="email" name="email" onChange={formik.handleChange} onBlur={formik.handleBlur} value={formik.values.email} />
-        {formik.touched.email && formik.errors.email && <div style={{ color: 'red' }}>{formik.errors.email}</div>}
+        <input type="email" name="email" {...formik.getFieldProps('email')} />
+        {formik.touched.email && formik.errors.email ? (
+          <div>{formik.errors.email}</div>
+        ) : null}
       </div>
       <div>
         <label>Password:</label>
-        <input type="password" name="password" onChange={formik.handleChange} onBlur={formik.handleBlur} value={formik.values.password} />
-        {formik.touched.password && formik.errors.password && <div style={{ color: 'red' }}>{formik.errors.password}</div>}
+        <input type="password" name="password" {...formik.getFieldProps('password')} />
+        {formik.touched.password && formik.errors.password ? (
+          <div>{formik.errors.password}</div>
+        ) : null}
       </div>
       <button type="submit">Register</button>
     </form>
